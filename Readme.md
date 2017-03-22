@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Николай Черников](https://up.htmlacademy.ru/javascript/9/user/154179).
-* Наставник: `Неизвестно`.
+* Наставник: [Татьяна Коростелева](https://htmlacademy.ru/profile/korosteleva).
 
 ---
 
