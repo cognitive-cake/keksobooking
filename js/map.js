@@ -64,17 +64,19 @@ function getRandomFeatures() {
 function createOffersArray(count) {
   var offers = [];
   for (var i = 0; i < count; i++) {
+    var locationX = getRandomInteger(300, 900);
+    var locationY = getRandomInteger(100, 500);
     offers.push({
       location: {
-        x: getRandomInteger(300, 900),
-        y: getRandomInteger(100, 500)
+        x: locationX,
+        y: locationY
       },
       author: {
         avatar: 'img/avatars/user0' + (i + 1) + '.png'
       },
       offer: {
         title: OFFER_TITLE[i],
-        address: offers.location.x + ', ' + offers.location.y,
+        address: locationX + ', ' + locationY,
         price: getRandomInteger(1000, 1000000),
         type: OFFER_HOUSE_TYPE[getRandomInteger(0, OFFER_HOUSE_TYPE.length - 1)],
         rooms: getRandomInteger(1, 5),
@@ -93,11 +95,12 @@ function createOffersArray(count) {
 // Создание единичной метки объявления для карты
 function createPin(object) {
   var pin = pinMap.querySelector('.pin').cloneNode(true);
-  pin.style.left = object.location.x + 28;
-  pin.style.top = object.location.y + 75;
-  pin.getElementsByTagName('img').src = object.author.avatar;
-  pin.getElementsByTagName('img').alt = 'Pin';
-  pin.getElementsByTagName('img').height = '40';
+  pin.classList.remove('pin__main');
+  pin.style.left = (object.location.x + 28) + 'px'; // Добавление размеров метки для точного отображения. 28px - половина ширины pin.png
+  pin.style.top = (object.location.y + 75) + 'px'; // 75px - высота pin.png
+  pin.getElementsByTagName('img')[0].src = object.author.avatar;
+  pin.getElementsByTagName('img')[0].alt = 'Pin';
+  pin.getElementsByTagName('img')[0].height = '40';
   return pin;
 }
 
