@@ -24,7 +24,7 @@ var OFFER_TITLE = [
   'Неуютное бунгало по колено в воде'
 ];
 var OFFER_FEATURES = [
-  'wi-fi',
+  'wifi',
   'dishwasher',
   'parking',
   'washer',
@@ -115,12 +115,12 @@ function createDomPinsList(array, count) {
 
 // Создание фрагмента для dialog__panel
 function createDomDialogPanel(object) {
-  var template = lodgeTemplate.cloneNode(true);
+  var template = lodgeTemplate.content.cloneNode(true);
   var featuresForDom = '';
 
   template.querySelector('.lodge__title').textContent = object.offer.title;
   template.querySelector('.lodge__address').textContent = object.offer.address;
-  template.querySelector('.lodge__price').textContent = object.offer.price + ' ' + '&#x20bd;/ночь';
+  template.querySelector('.lodge__price').textContent = object.offer.price + ' ' + '\u20BD' + '/ночь';
   template.querySelector('.lodge__type').textContent = typeDescriptions[object.offer.type];
   template.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + object.offer.guests + ' гостей в ' + object.offer.rooms + ' комнатах';
   template.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до' + object.offer.checkout;
@@ -131,7 +131,7 @@ function createDomDialogPanel(object) {
 
   template.querySelector('.lodge__features').innerHTML = featuresForDom;
   template.querySelector('.lodge__description').textContent = object.offer.description;
-  dialogTitle.getElementsByTagName('img').src = object.author.avatar;
+  dialogTitle.getElementsByTagName('img')[0].src = object.author.avatar;
 
   offerDialog.replaceChild(template, dialogPanel);
 }
