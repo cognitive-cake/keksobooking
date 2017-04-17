@@ -1,9 +1,11 @@
 'use strict';
 
 var pinMap = document.querySelector('.tokyo__pin-map');
+var allpins = pinMap.getElementsByClassName('pin');
 var offerDialog = document.querySelector('#offer-dialog');
 var dialogTitle = offerDialog.querySelector('.dialog__title');
 var dialogPanel = offerDialog.querySelector('.dialog__panel');
+var dialogClose = offerDialog.querySelector('.dialog__close');
 var lodgeTemplate = document.querySelector('#lodge-template');
 var allOffers = [];
 var typeDescriptions = {
@@ -133,8 +135,52 @@ function createDomDialogPanel(object) {
   template.querySelector('.lodge__description').textContent = object.offer.description;
   dialogTitle.getElementsByTagName('img')[0].src = object.author.avatar;
 
+  dialogPanel = offerDialog.querySelector('.dialog__panel'); // без этой строчки будет выдавать ошибку при клике на пине, т.к. не сможет найти значение dialogPanel, которое было определенно в начале этого файла. Потому что оно было заменено при выполнении функции createDomDialogPanel(allOffers[0]);
   offerDialog.replaceChild(template, dialogPanel);
 }
+
+// -------------------------------------- Events ----------------------------------------
+// Обработчик клика на пине
+function onPinClick(evt) {
+  var target = evt.target;
+  offerDialog.classList.remove('hidden');
+  while (target !== pinMap) {
+    if (target.classList.contains('pin')) {
+      if (target.classList.contains('pin__main')) { // Если повесить на pin__main класс pin--active, то иконка начинает баговать. В ТЗ ничего не сказано про pin__main. Решил исключить pin__main
+        return;
+      }
+      for (var i = 0; i < allpins.length; i++) {
+        if (allpins[i] !== target) {
+          allpins[i].classList.remove('pin--active');
+        } else {
+          createDomDialogPanel(allOffers[i - 1]); // Единица вычитается, т.к. allpins.length > allOffers.length на единицу из-за div.pin__main
+          continue;
+        }
+      }
+      target.classList.toggle('pin--active');
+      return;
+    }
+    target = target.parentNode;
+  }
+}
+
+// Закрытие диалога и снятие подсветки с пина
+function onDialogCloseClick() {
+  offerDialog.classList.add('hidden');
+  for (var i = 0; i < allpins.length; i++) {
+    allpins[i].classList.remove('pin--active');
+  }
+}
+
+pinMap.addEventListener('click', function (evt) {
+  onPinClick(evt);
+});
+
+dialogClose.addEventListener('click', function () {
+  onDialogCloseClick();
+});
+
+// ------------------------------------ Events end --------------------------------------
 
 allOffers = createOffersArray(OFFERS_COUNT);
 createDomPinsList(allOffers, OFFERS_COUNT);
