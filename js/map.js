@@ -141,8 +141,9 @@ function createDomDialogPanel(object) {
 }
 
 // -------------------------------------- Events ----------------------------------------
-// Обработчик клика на пине
-function onPinClick(evt) {
+
+// Подсветка пина и показ диалога
+function activatePin(evt) {
   var target = evt.target;
   offerDialog.classList.remove('hidden');
   while (target !== pinMap) {
@@ -166,27 +167,37 @@ function onPinClick(evt) {
 }
 
 // Закрытие диалога и снятие подсветки с пина
-function onDialogCloseClick() {
+function diactivatePin() {
   offerDialog.classList.add('hidden');
   for (var i = 0; i < allpins.length; i++) {
     allpins[i].classList.remove('pin--active');
   }
+  document.removeEventListener('keydown', onEscPress);
+  dialogClose.removeEventListener('click', onDialogClosePress);
+}
+
+// Обработчик для Esc
+function onEscPress(evt) {
+  if (evt.keyCode === 27) {
+    diactivatePin();
+  }
+}
+
+// Обработчик для крестика у диалога
+function onDialogClosePress() {
+  diactivatePin();
 }
 
 pinMap.addEventListener('click', function (evt) {
-  onPinClick(evt);
+  activatePin(evt);
+  document.addEventListener('keydown', onEscPress);
+  dialogClose.addEventListener('click', onDialogClosePress);
 });
 pinMap.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
-    onPinClick(evt);
-  }
-});
-dialogClose.addEventListener('click', function () {
-  onDialogCloseClick();
-});
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 27) {
-    onDialogCloseClick();
+    activatePin(evt);
+    document.addEventListener('keydown', onEscPress);
+    dialogClose.addEventListener('click', onDialogClosePress);
   }
 });
 
