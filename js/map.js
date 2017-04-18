@@ -100,6 +100,7 @@ function createPin(object) {
   pin.classList.remove('pin__main');
   pin.style.left = (object.location.x + 28) + 'px'; // Добавление размеров метки для точного отображения. 28px - половина ширины pin.png
   pin.style.top = (object.location.y + 75) + 'px'; // 75px - высота pin.png
+  pin.tabIndex = '0';
   pin.getElementsByTagName('img')[0].src = object.author.avatar;
   pin.getElementsByTagName('img')[0].alt = 'Pin';
   pin.getElementsByTagName('img')[0].height = '40';
@@ -157,7 +158,7 @@ function onPinClick(evt) {
           continue;
         }
       }
-      target.classList.toggle('pin--active');
+      target.classList.add('pin--active');
       return;
     }
     target = target.parentNode;
@@ -175,9 +176,18 @@ function onDialogCloseClick() {
 pinMap.addEventListener('click', function (evt) {
   onPinClick(evt);
 });
-
+pinMap.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    onPinClick(evt);
+  }
+});
 dialogClose.addEventListener('click', function () {
   onDialogCloseClick();
+});
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 27) {
+    onDialogCloseClick();
+  }
 });
 
 // ------------------------------------ Events end --------------------------------------
