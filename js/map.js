@@ -173,7 +173,7 @@ function diactivatePin() {
     allpins[i].classList.remove('pin--active');
   }
   document.removeEventListener('keydown', onEscPress);
-  dialogClose.removeEventListener('click', onDialogClosePress);
+  dialogClose.removeEventListener('click', onDialogCloseClick());
 }
 
 // Обработчик для Esc
@@ -184,20 +184,20 @@ function onEscPress(evt) {
 }
 
 // Обработчик для крестика у диалога
-function onDialogClosePress() {
+function onDialogCloseClick() {
   diactivatePin();
 }
 
 pinMap.addEventListener('click', function (evt) {
   activatePin(evt);
   document.addEventListener('keydown', onEscPress);
-  dialogClose.addEventListener('click', onDialogClosePress);
+  dialogClose.addEventListener('click', onDialogCloseClick());
 });
 pinMap.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     activatePin(evt);
     document.addEventListener('keydown', onEscPress);
-    dialogClose.addEventListener('click', onDialogClosePress);
+    dialogClose.addEventListener('click', onDialogCloseClick());
   }
 });
 
