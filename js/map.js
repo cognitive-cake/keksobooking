@@ -96,12 +96,13 @@ function createOffersArray(count) {
 }
 
 // Создание единичной метки объявления для карты
-function createPin(object) {
+function createPin(object, count) {
   var pin = pinMap.querySelector('.pin').cloneNode(true);
   pin.classList.remove('pin__main');
   pin.style.left = (object.location.x + 28) + 'px'; // Добавление размеров метки для точного отображения. 28px - половина ширины pin.png
   pin.style.top = (object.location.y + 75) + 'px'; // 75px - высота pin.png
   pin.tabIndex = '0';
+  pin.dataset.index = count;
   pin.getElementsByTagName('img')[0].src = object.author.avatar;
   pin.getElementsByTagName('img')[0].alt = 'Pin';
   pin.getElementsByTagName('img')[0].height = '40';
@@ -112,7 +113,7 @@ function createPin(object) {
 function createDomPinsList(array, count) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < count; i++) {
-    fragment.appendChild(createPin(array[i]));
+    fragment.appendChild(createPin(array[i], i));
   }
   pinMap.appendChild(fragment);
 }
@@ -137,7 +138,7 @@ function createDomDialogPanel(object) {
   template.querySelector('.lodge__description').textContent = object.offer.description;
   dialogTitle.getElementsByTagName('img')[0].src = object.author.avatar;
 
-  dialogPanel = offerDialog.querySelector('.dialog__panel'); // без этой строчки будет выдавать ошибку при клике на пине, т.к. не сможет найти значение dialogPanel, которое было определенно в начале этого файла. Потому что оно было заменено при выполнении функции createDomDialogPanel(allOffers[0]);
+  dialogPanel = offerDialog.querySelector('.dialog__panel');
   offerDialog.replaceChild(template, dialogPanel);
 }
 
@@ -151,18 +152,15 @@ var offerPins = pinMap.querySelectorAll('.pin:not(.pin__main)');
 
 // Подсветка пина и показ диалога
 function activatePin(evt) {
-  var target = evt.currentTarget;
+  var clickedPin = evt.currentTarget;
+  var activePin = pinMap.querySelector('.pin--active');
+  var clickedPinIndex = clickedPin.dataset.index;
   offerDialog.classList.remove('hidden');
-  for (var i = 0; i < offerPins.length; i++) {
-    if (offerPins[i] !== target) {
-      offerPins[i].classList.remove('pin--active');
-    } else {
-      createDomDialogPanel(allOffers[i]);
-      continue;
-    }
+  if (activePin) {
+    activePin.classList.remove('pin--active');
   }
-  target.classList.add('pin--active');
-  return;
+  createDomDialogPanel(allOffers[clickedPinIndex]);
+  clickedPin.classList.add('pin--active');
 }
 
 
