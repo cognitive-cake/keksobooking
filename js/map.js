@@ -43,6 +43,8 @@ var OFFER_TIME = [
   '13:00',
   '14:00'
 ];
+var KEY_CODE_ENTER = 13;
+var KEY_CODE_ESC = 27;
 
 // Генерация числа [min, max], включая предельные значения
 function getRandomInteger(min, max) {
@@ -140,7 +142,13 @@ function createDomDialogPanel(object) {
   offerDialog.replaceChild(template, dialogPanel);
 }
 
+allOffers = createOffersArray(OFFERS_COUNT);
+createDomPinsList(allOffers, OFFERS_COUNT);
+createDomDialogPanel(allOffers[0]);
+
 // -------------------------------------- Events ----------------------------------------
+
+var offerPins = pinMap.querySelectorAll('.pin:not(.pin__main)');
 
 // Подсветка пина и показ диалога
 function activatePin(evt) {
@@ -148,14 +156,11 @@ function activatePin(evt) {
   offerDialog.classList.remove('hidden');
   while (target !== pinMap) {
     if (target.classList.contains('pin')) {
-      if (target.classList.contains('pin__main')) { // Если повесить на pin__main класс pin--active, то иконка начинает баговать. В ТЗ ничего не сказано про pin__main. Решил исключить pin__main
-        return;
-      }
-      for (var i = 0; i < allpins.length; i++) {
-        if (allpins[i] !== target) {
-          allpins[i].classList.remove('pin--active');
+      for (var i = 0; i < offerPins.length; i++) {
+        if (offerPins[i] !== target) {
+          offerPins[i].classList.remove('pin--active');
         } else {
-          createDomDialogPanel(allOffers[i - 1]); // Единица вычитается, т.к. allpins.length > allOffers.length на единицу из-за div.pin__main
+          createDomDialogPanel(allOffers[i]);
           continue;
         }
       }
@@ -178,7 +183,7 @@ function diactivatePin() {
 
 // Обработчик для Esc
 function onEscPress(evt) {
-  if (evt.keyCode === 27) {
+  if (isEscPressed(evt)) {
     diactivatePin();
   }
 }
@@ -188,21 +193,31 @@ function onDialogCloseClick() {
   diactivatePin();
 }
 
-pinMap.addEventListener('click', function (evt) {
-  activatePin(evt);
-  document.addEventListener('keydown', onEscPress);
-  dialogClose.addEventListener('click', onDialogCloseClick);
-});
-pinMap.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+// Проверка клавиши Enter
+function isEnterPressed(evt) {
+  return evt.keyCode === KEY_CODE_ENTER;
+}
+
+// Проверка клавиши Esc
+function isEscPressed(evt) {
+  return evt.keyCode === KEY_CODE_ESC;
+}
+
+for (var i = 0; i < offerPins.length; i++) {
+  offerPins[i].addEventListener('click', function (evt) {
     activatePin(evt);
     document.addEventListener('keydown', onEscPress);
     dialogClose.addEventListener('click', onDialogCloseClick);
-  }
-});
+  });
+}
+for (i = 0; i < offerPins.length; i++) {
+  offerPins[i].addEventListener('keydown', function (evt) {
+    if (isEnterPressed(evt)) {
+      activatePin(evt);
+      document.addEventListener('keydown', onEscPress);
+      dialogClose.addEventListener('click', onDialogCloseClick);
+    }
+  });
+}
 
 // ------------------------------------ Events end --------------------------------------
-
-allOffers = createOffersArray(OFFERS_COUNT);
-createDomPinsList(allOffers, OFFERS_COUNT);
-createDomDialogPanel(allOffers[0]);
