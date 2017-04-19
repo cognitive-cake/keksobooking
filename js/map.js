@@ -1,7 +1,6 @@
 'use strict';
 
 var pinMap = document.querySelector('.tokyo__pin-map');
-var allpins = pinMap.getElementsByClassName('pin');
 var offerDialog = document.querySelector('#offer-dialog');
 var dialogTitle = offerDialog.querySelector('.dialog__title');
 var dialogPanel = offerDialog.querySelector('.dialog__panel');
@@ -152,37 +151,32 @@ var offerPins = pinMap.querySelectorAll('.pin:not(.pin__main)');
 
 // Подсветка пина и показ диалога
 function activatePin(evt) {
-  var target = evt.target;
+  var target = evt.currentTarget;
   offerDialog.classList.remove('hidden');
-  while (target !== pinMap) {
-    if (target.classList.contains('pin')) {
-      for (var i = 0; i < offerPins.length; i++) {
-        if (offerPins[i] !== target) {
-          offerPins[i].classList.remove('pin--active');
-        } else {
-          createDomDialogPanel(allOffers[i]);
-          continue;
-        }
-      }
-      target.classList.add('pin--active');
-      return;
+  for (var i = 0; i < offerPins.length; i++) {
+    if (offerPins[i] !== target) {
+      offerPins[i].classList.remove('pin--active');
+    } else {
+      createDomDialogPanel(allOffers[i]);
+      continue;
     }
-    target = target.parentNode;
   }
+  target.classList.add('pin--active');
+  return;
 }
+
 
 // Закрытие диалога и снятие подсветки с пина
 function diactivatePin() {
   offerDialog.classList.add('hidden');
-  for (var i = 0; i < allpins.length; i++) {
-    allpins[i].classList.remove('pin--active');
-  }
-  document.removeEventListener('keydown', onEscPress);
+  var currentPin = pinMap.querySelector('.pin--active');
+  currentPin.classList.remove('pin--active');
+  document.removeEventListener('keydown', onDocumentKeydown);
   dialogClose.removeEventListener('click', onDialogCloseClick);
 }
 
 // Обработчик для Esc
-function onEscPress(evt) {
+function onDocumentKeydown(evt) {
   if (isEscPressed(evt)) {
     diactivatePin();
   }
@@ -206,15 +200,13 @@ function isEscPressed(evt) {
 for (var i = 0; i < offerPins.length; i++) {
   offerPins[i].addEventListener('click', function (evt) {
     activatePin(evt);
-    document.addEventListener('keydown', onEscPress);
+    document.addEventListener('keydown', onDocumentKeydown);
     dialogClose.addEventListener('click', onDialogCloseClick);
   });
-}
-for (i = 0; i < offerPins.length; i++) {
   offerPins[i].addEventListener('keydown', function (evt) {
     if (isEnterPressed(evt)) {
       activatePin(evt);
-      document.addEventListener('keydown', onEscPress);
+      document.addEventListener('keydown', onDocumentKeydown);
       dialogClose.addEventListener('click', onDialogCloseClick);
     }
   });
