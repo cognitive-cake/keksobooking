@@ -211,3 +211,62 @@ for (var i = 0; i < offerPins.length; i++) {
 }
 
 // ------------------------------------ Events end --------------------------------------
+
+// --------------------------------------- Form -----------------------------------------
+
+var type = document.getElementById('type');
+var price = document.getElementById('price');
+var roomNumber = document.getElementById('room_number');
+var capacity = document.getElementById('capacity');
+var time = document.getElementById('time');
+var timeout = document.getElementById('timeout');
+
+// Установка зависимости минимальной цены от типа жилья
+function typeChangeHandler(evt) {
+  var currentSelect = evt.currentTarget;
+  if (currentSelect.value === 'Квартира') {
+    price.min = '1000';
+    price.placeholder = '1000';
+  } else if (currentSelect.value === 'Лачуга') {
+    price.min = '0';
+    price.placeholder = '0';
+  } else {
+    price.min = '10000';
+    price.placeholder = '10000';
+  }
+}
+
+// Устаовка зависимости кол-ва гостей от кол-ва комнат
+function roomNumberChangeHandler(evt) {
+  var currentSelect = evt.currentTarget;
+  if (currentSelect.value === '1 комната') {
+    capacity.value = 'не для гостей';
+  } else {
+    capacity.value = 'для 3 гостей';
+  }
+}
+
+// Установка одинакового времени заезда и выезда
+function timeChangeHandler(evt, anotherSelect) {
+  var currentSelect = evt.currentTarget;
+  for (i = 0; i < currentSelect.options.length; i++) {
+    if (currentSelect.options[i].selected) {
+      anotherSelect.selectedIndex = i;
+    }
+  }
+}
+
+type.addEventListener('change', function (evt) {
+  typeChangeHandler(evt);
+});
+roomNumber.addEventListener('change', function (evt) {
+  roomNumberChangeHandler(evt);
+});
+time.addEventListener('change', function (evt) {
+  timeChangeHandler(evt, timeout);
+});
+timeout.addEventListener('change', function (evt) {
+  timeChangeHandler(evt, time);
+});
+
+// ------------------------------------- Form end ---------------------------------------
