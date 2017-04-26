@@ -146,7 +146,7 @@ allOffers = createOffersArray(OFFERS_COUNT);
 createDomPinsList(allOffers, OFFERS_COUNT);
 createDomDialogPanel(allOffers[0]);
 
-// -------------------------------------- Events ----------------------------------------
+// ------------------------------------ Pin events --------------------------------------
 
 var offerPins = pinMap.querySelectorAll('.pin:not(.pin__main)');
 
@@ -210,7 +210,7 @@ for (var i = 0; i < offerPins.length; i++) {
   });
 }
 
-// ------------------------------------ Events end --------------------------------------
+// ---------------------------------- Pin events end ------------------------------------
 
 // --------------------------------------- Form -----------------------------------------
 
@@ -220,8 +220,11 @@ var type = form.querySelector('#type');
 var price = form.querySelector('#price');
 var roomNumber = form.querySelector('#room_number');
 var capacity = form.querySelector('#capacity');
+var description = form.querySelector('#description');
+var newNoticeAddress = form.querySelector('#address');
 var time = form.querySelector('#time');
 var timeout = form.querySelector('#timeout');
+
 var houseTypeValues = ['Квартира', 'Лачуга', 'Дворец'];
 var priceMinValues = ['1000', '0', '10000'];
 var roomNumberValues = ['1 комната', '2 комнаты', '100 комнат'];
@@ -286,6 +289,22 @@ function checkPriceValidity() {
   }
 }
 
+// Возврат полям значений по-умолчанию
+function returnDefaultValues() {
+  title.value = '';
+  type.value = houseTypeValues[0];
+  price.value = '';
+  roomNumber.value = roomCapacityValues[0];
+  capacity.value = roomCapacityValues[0];
+  description.value = '';
+  newNoticeAddress.value = '';
+  time.selectedIndex = 0;
+  timeout.selectedIndex = 0;
+}
+
+form.addEventListener('submit', function () {
+  returnDefaultValues();
+});
 title.addEventListener('input', function (evt) {
   markInvalidField(evt);
 });
