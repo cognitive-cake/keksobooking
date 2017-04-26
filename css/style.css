@@ -86,6 +86,10 @@ select option:hover {
   display: none;
 }
 
+.error {
+  border-color: red;
+}
+
 .feature {
     box-sizing: border-box;
     width: 70px;

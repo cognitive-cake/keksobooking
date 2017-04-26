@@ -220,36 +220,45 @@ var roomNumber = document.getElementById('room_number');
 var capacity = document.getElementById('capacity');
 var time = document.getElementById('time');
 var timeout = document.getElementById('timeout');
+var houseTypeValues = ['Квартира', 'Лачуга', 'Дворец'];
+var priceMinValues = ['1000', '0', '10000'];
+var roomNumberValues = ['1 комната', '2 комнаты', '100 комнат'];
+var roomCapacityValues = ['не для гостей', 'для 3 гостей', 'для 3 гостей']; // Пришло в голову такое решение. С повторением значений. Это допустимое решение? Или костыль? =)
 
 // Установка зависимости минимальной цены от типа жилья
 function typeChangeHandler(evt) {
   var currentSelect = evt.currentTarget;
-  if (currentSelect.value === 'Квартира') {
-    price.min = '1000';
-    price.placeholder = '1000';
-  } else if (currentSelect.value === 'Лачуга') {
-    price.min = '0';
-    price.placeholder = '0';
-  } else {
-    price.min = '10000';
-    price.placeholder = '10000';
+  for (i = 0; i < houseTypeValues.length; i++) {
+    if (currentSelect.value === houseTypeValues[i]) {
+      price.min = priceMinValues[i];
+    }
   }
 }
 
-// Устаовка зависимости кол-ва гостей от кол-ва комнат
+// Установка зависимости кол-ва гостей от кол-ва комнат
 function roomNumberChangeHandler(evt) {
   var currentSelect = evt.currentTarget;
-  if (currentSelect.value === '1 комната') {
-    capacity.value = 'не для гостей';
-  } else {
-    capacity.value = 'для 3 гостей';
+  for (i = 0; i < roomNumberValues.length; i++) {
+    if (currentSelect.value === roomNumberValues[i]) {
+      capacity.value = roomCapacityValues[i];
+    }
+  }
+}
+
+// Установка зависимости кол-ва комнат от кол-ва гостей
+function capacityChangeHandler(evt) {
+  var currentSelect = evt.currentTarget;
+  for (i = 0; i < roomCapacityValues.length; i++) {
+    if (currentSelect.value === roomCapacityValues[i]) {
+      roomNumber.value = roomNumberValues[i];
+    }
   }
 }
 
 // Установка одинакового времени заезда и выезда
 function timeChangeHandler(evt, anotherSelect) {
   var currentSelect = evt.currentTarget;
-  for (i = 0; i < currentSelect.options.length; i++) {
+  for (i = 0; i < currentSelect.options.length; i++) { // Здесь не получилось придумать ничего лучше. Если выбрать "для 3 гостей", то if выполнится 2 раза: сначала поставит '2 комнаты', а затем '100 комнат'. Не знаю, насколько допустимо такое поведение.
     if (currentSelect.options[i].selected) {
       anotherSelect.selectedIndex = i;
     }
@@ -261,6 +270,9 @@ type.addEventListener('change', function (evt) {
 });
 roomNumber.addEventListener('change', function (evt) {
   roomNumberChangeHandler(evt);
+});
+capacity.addEventListener('change', function (evt) {
+  capacityChangeHandler(evt);
 });
 time.addEventListener('change', function (evt) {
   timeChangeHandler(evt, timeout);
