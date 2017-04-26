@@ -214,12 +214,13 @@ for (var i = 0; i < offerPins.length; i++) {
 
 // --------------------------------------- Form -----------------------------------------
 
-var type = document.getElementById('type');
-var price = document.getElementById('price');
-var roomNumber = document.getElementById('room_number');
-var capacity = document.getElementById('capacity');
-var time = document.getElementById('time');
-var timeout = document.getElementById('timeout');
+var form = document.querySelector('.notice__form');
+var type = form.querySelector('#type');
+var price = form.querySelector('#price');
+var roomNumber = form.querySelector('#room_number');
+var capacity = form.querySelector('#capacity');
+var time = form.querySelector('#time');
+var timeout = form.querySelector('#timeout');
 var houseTypeValues = ['Квартира', 'Лачуга', 'Дворец'];
 var priceMinValues = ['1000', '0', '10000'];
 var roomNumberValues = ['1 комната', '2 комнаты', '100 комнат'];
