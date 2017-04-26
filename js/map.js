@@ -228,7 +228,7 @@ var roomNumberValues = ['1 комната', '2 комнаты', '100 комна�
 var roomCapacityValues = ['не для гостей', 'для 3 гостей', 'для 3 гостей']; // Пришло в голову такое решение. С повторением значений. Это допустимое решение? Или костыль? =)
 
 // Установка зависимости минимальной цены от типа жилья
-function typeChangeHandler(evt) {
+function changePrice(evt) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < houseTypeValues.length; i++) {
     if (currentSelect.value === houseTypeValues[i]) {
@@ -238,7 +238,7 @@ function typeChangeHandler(evt) {
 }
 
 // Установка зависимости кол-ва гостей от кол-ва комнат
-function roomNumberChangeHandler(evt) {
+function changeCapacity(evt) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < roomNumberValues.length; i++) {
     if (currentSelect.value === roomNumberValues[i]) {
@@ -248,7 +248,7 @@ function roomNumberChangeHandler(evt) {
 }
 
 // Установка зависимости кол-ва комнат от кол-ва гостей
-function capacityChangeHandler(evt) {
+function changeRooms(evt) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < roomCapacityValues.length; i++) {
     if (currentSelect.value === roomCapacityValues[i]) { // Здесь не получилось придумать ничего лучше. Если выбрать "для 3 гостей", то if выполнится 2 раза: сначала поставит '2 комнаты', а затем '100 комнат'. Не знаю, насколько допустимо такое поведение.
@@ -258,7 +258,7 @@ function capacityChangeHandler(evt) {
 }
 
 // Установка одинакового времени заезда и выезда
-function timeChangeHandler(evt, anotherSelect) {
+function changeTime(evt, anotherSelect) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < currentSelect.options.length; i++) {
     if (currentSelect.options[i].selected) {
@@ -268,7 +268,7 @@ function timeChangeHandler(evt, anotherSelect) {
 }
 
 // Подсветка invalid-полей
-function inputInvalidMarkHandler(evt) {
+function markInvalidField(evt) {
   var invalidField = evt.currentTarget;
   if (invalidField.validity.valid) {
     invalidField.classList.remove('error');
@@ -287,26 +287,26 @@ function checkPriceValidity() {
 }
 
 title.addEventListener('input', function (evt) {
-  inputInvalidMarkHandler(evt);
+  markInvalidField(evt);
 });
 type.addEventListener('change', function (evt) {
-  typeChangeHandler(evt);
+  changePrice(evt);
   checkPriceValidity();
 });
 price.addEventListener('input', function (evt) {
-  inputInvalidMarkHandler(evt);
+  markInvalidField(evt);
 });
 roomNumber.addEventListener('change', function (evt) {
-  roomNumberChangeHandler(evt);
+  changeCapacity(evt);
 });
 capacity.addEventListener('change', function (evt) {
-  capacityChangeHandler(evt);
+  changeRooms(evt);
 });
 time.addEventListener('change', function (evt) {
-  timeChangeHandler(evt, timeout);
+  changeTime(evt, timeout);
 });
 timeout.addEventListener('change', function (evt) {
-  timeChangeHandler(evt, time);
+  changeTime(evt, time);
 });
 
 // ------------------------------------- Form end ---------------------------------------
