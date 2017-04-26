@@ -249,7 +249,7 @@ function roomNumberChangeHandler(evt) {
 function capacityChangeHandler(evt) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < roomCapacityValues.length; i++) {
-    if (currentSelect.value === roomCapacityValues[i]) {
+    if (currentSelect.value === roomCapacityValues[i]) { // Здесь не получилось придумать ничего лучше. Если выбрать "для 3 гостей", то if выполнится 2 раза: сначала поставит '2 комнаты', а затем '100 комнат'. Не знаю, насколько допустимо такое поведение.
       roomNumber.value = roomNumberValues[i];
     }
   }
@@ -258,7 +258,7 @@ function capacityChangeHandler(evt) {
 // Установка одинакового времени заезда и выезда
 function timeChangeHandler(evt, anotherSelect) {
   var currentSelect = evt.currentTarget;
-  for (i = 0; i < currentSelect.options.length; i++) { // Здесь не получилось придумать ничего лучше. Если выбрать "для 3 гостей", то if выполнится 2 раза: сначала поставит '2 комнаты', а затем '100 комнат'. Не знаю, насколько допустимо такое поведение.
+  for (i = 0; i < currentSelect.options.length; i++) {
     if (currentSelect.options[i].selected) {
       anotherSelect.selectedIndex = i;
     }
