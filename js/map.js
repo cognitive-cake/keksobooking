@@ -215,6 +215,7 @@ for (var i = 0; i < offerPins.length; i++) {
 // --------------------------------------- Form -----------------------------------------
 
 var form = document.querySelector('.notice__form');
+var title = form.querySelector('#title');
 var type = form.querySelector('#type');
 var price = form.querySelector('#price');
 var roomNumber = form.querySelector('#room_number');
@@ -266,8 +267,34 @@ function timeChangeHandler(evt, anotherSelect) {
   }
 }
 
+// Подсветка invalid-полей
+function inputInvalidMarkHandler(evt) {
+  var invalidField = evt.currentTarget;
+  if (invalidField.validity.valid) {
+    invalidField.classList.remove('error');
+  } else {
+    invalidField.classList.add('error');
+  }
+}
+
+// Проверка валидности цены после изменения типа жилья
+function checkPriceValidity() {
+  if (price.checkValidity()) {
+    price.classList.remove('error');
+  } else {
+    price.classList.add('error');
+  }
+}
+
+title.addEventListener('input', function (evt) {
+  inputInvalidMarkHandler(evt);
+});
 type.addEventListener('change', function (evt) {
   typeChangeHandler(evt);
+  checkPriceValidity();
+});
+price.addEventListener('input', function (evt) {
+  inputInvalidMarkHandler(evt);
 });
 roomNumber.addEventListener('change', function (evt) {
   roomNumberChangeHandler(evt);
