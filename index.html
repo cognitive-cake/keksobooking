@@ -117,48 +117,48 @@
         <div class="form__panel">
           <div class="form__element  form__element--wide">
             <label for="title">Заголовок объявления</label>
-            <input id="title" type="text" placeholder="Милая, уютная квартирка, например">
+            <input id="title" type="text" placeholder="Милая, уютная квартирка, например" minlength="30" maxlength="100" value="" required>
           </div>
           <div class="form__row">
             <div class="form__element">
               <label for="type">Тип жилья</label>
               <select id="type">
-                <option selected>Квартира</option>
-                <option>Лачуга</option>
-                <option>Дворец</option>
+                <option selected value="Квартира">Квартира</option>
+                <option value="Лачуга">Лачуга</option>
+                <option value="Дворец">Дворец</option>
               </select>
             </div>
             <div class="form__element">
               <label for="price">Цена за ночь, руб.</label>
-              <input id="price" type="number" placeholder="5000">
+              <input id="price" type="number" placeholder="1000" min="1000" max="1000000" value="">
             </div>
           </div>
           <div class="form__row">
             <div class="form__element">
               <label for="room_number">Кол-во комнат</label>
               <select id="room_number">
-                <option selected>1 комната</option>
-                <option>2 комнаты</option>
-                <option>100 комнат</option>
+                <option selected value="1 комната">1 комната</option>
+                <option value="2 комнаты">2 комнаты</option>
+                <option value="100 комнат">100 комнат</option>
               </select>
             </div>
             <div class="form__element">
               <label for="capacity">Количество мест</label>
               <select id="capacity">
-                <option selected>для 3 гостей</option>
-                <option>не для гостей</option>
+                <option value="для 3 гостей">для 3 гостей</option>
+                <option selected value="не для гостей">не для гостей</option>
               </select>
             </div>
           </div>
           <div class="form__element  form__element--wide">
             <label for="description">Описание (не обязательно)</label>
-            <textarea id="description" placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще"></textarea>
+            <textarea id="description" placeholder="Здесь расскажите о том, какое ваше жилье замечательное и вообще" value=""></textarea>
           </div>
         </div>
         <div class="form__panel">
           <div class="form__element  form__element--wide">
             <label for="address">Адрес</label>
-            <input id="address" type="text">
+            <input id="address" type="text" value="">
           </div>
           <div class="form__row">
             <div class="form__element">
