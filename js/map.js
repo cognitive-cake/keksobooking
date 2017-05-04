@@ -228,7 +228,7 @@ var timeout = form.querySelector('#timeout');
 var houseTypeValues = ['Квартира', 'Лачуга', 'Дворец'];
 var priceMinValues = ['1000', '0', '10000'];
 var roomNumberValues = ['1 комната', '2 комнаты', '100 комнат'];
-var roomCapacityValues = ['не для гостей', 'для 3 гостей', 'для 3 гостей']; // Пришло в голову такое решение. С повторением значений. Это допустимое решение? Или костыль? =)
+var roomCapacityValues = ['не для гостей', 'для 3 гостей', 'для 3 гостей'];
 
 // Установка зависимости минимальной цены от типа жилья
 function changePrice(evt) {
@@ -254,7 +254,7 @@ function changeCapacity(evt) {
 function changeRooms(evt) {
   var currentSelect = evt.currentTarget;
   for (i = 0; i < roomCapacityValues.length; i++) {
-    if (currentSelect.value === roomCapacityValues[i]) { // Здесь не получилось придумать ничего лучше. Если выбрать "для 3 гостей", то if выполнится 2 раза: сначала поставит '2 комнаты', а затем '100 комнат'. Не знаю, насколько допустимо такое поведение.
+    if (currentSelect.value === roomCapacityValues[i]) {
       roomNumber.value = roomNumberValues[i];
     }
   }
