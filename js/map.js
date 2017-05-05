@@ -5,13 +5,8 @@ var offerDialog = document.querySelector('#offer-dialog');
 var dialogTitle = offerDialog.querySelector('.dialog__title');
 var dialogPanel = offerDialog.querySelector('.dialog__panel');
 var dialogClose = offerDialog.querySelector('.dialog__close');
-var lodgeTemplate = document.querySelector('#lodge-template');
 var allOffers = [];
-var typeDescriptions = {
-  flat: 'Квартира',
-  bungalo: 'Бунгало',
-  house: 'Дом'
-};
+
 
 var OFFERS_COUNT = 8;
 var OFFER_TITLE = [
@@ -45,17 +40,10 @@ var OFFER_TIME = [
 var KEY_CODE_ENTER = 13;
 var KEY_CODE_ESC = 27;
 
-// Генерация числа [min, max], включая предельные значения
-function getRandomInteger(min, max) {
-  var rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-}
-
 // Генерация массива фич (случайной длины)
 function getRandomFeatures() {
   var randomFeatures = [];
-  var num = getRandomInteger(0, OFFER_FEATURES.length - 1); // определяем количество фич в будущем массиве
+  var num = dataGeneration.getRandomInteger(0, OFFER_FEATURES.length - 1); // определяем количество фич в будущем массиве
   for (var i = 0; i < num; i++) {
     var value = OFFER_FEATURES[i];
     randomFeatures.push(value);
@@ -67,8 +55,8 @@ function getRandomFeatures() {
 function createOffersArray(count) {
   var offers = [];
   for (var i = 0; i < count; i++) {
-    var locationX = getRandomInteger(300, 900);
-    var locationY = getRandomInteger(100, 500);
+    var locationX = dataGeneration.getRandomInteger(300, 900);
+    var locationY = dataGeneration.getRandomInteger(100, 500);
     offers.push({
       location: {
         x: locationX,
@@ -80,12 +68,12 @@ function createOffersArray(count) {
       offer: {
         title: OFFER_TITLE[i],
         address: locationX + ', ' + locationY,
-        price: getRandomInteger(1000, 1000000),
-        type: OFFER_HOUSE_TYPE[getRandomInteger(0, OFFER_HOUSE_TYPE.length - 1)],
-        rooms: getRandomInteger(1, 5),
-        guests: getRandomInteger(1, 10),
-        checkin: OFFER_TIME[getRandomInteger(0, OFFER_TIME.length - 1)],
-        checkout: OFFER_TIME[getRandomInteger(0, OFFER_TIME.length - 1)],
+        price: dataGeneration.getRandomInteger(1000, 1000000),
+        type: OFFER_HOUSE_TYPE[dataGeneration.getRandomInteger(0, OFFER_HOUSE_TYPE.length - 1)],
+        rooms: dataGeneration.getRandomInteger(1, 5),
+        guests: dataGeneration.getRandomInteger(1, 10),
+        checkin: OFFER_TIME[dataGeneration.getRandomInteger(0, OFFER_TIME.length - 1)],
+        checkout: OFFER_TIME[dataGeneration.getRandomInteger(0, OFFER_TIME.length - 1)],
         features: getRandomFeatures(),
         description: '',
         photos: [],
@@ -118,33 +106,7 @@ function createDomPinsList(array, count) {
   pinMap.appendChild(fragment);
 }
 
-// Создание фрагмента для dialog__panel
-function createDomDialogPanel(object) {
-  var template = lodgeTemplate.content.cloneNode(true);
-  var featuresForDom = '';
 
-  template.querySelector('.lodge__title').textContent = object.offer.title;
-  template.querySelector('.lodge__address').textContent = object.offer.address;
-  template.querySelector('.lodge__price').textContent = object.offer.price + ' ' + '\u20BD' + '/ночь';
-  template.querySelector('.lodge__type').textContent = typeDescriptions[object.offer.type];
-  template.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + object.offer.guests + ' гостей в ' + object.offer.rooms + ' комнатах';
-  template.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до' + object.offer.checkout;
-
-  for (var i = 0; i < object.offer.features.length; i++) {
-    featuresForDom += '<span class="feature__image feature__image--' + object.offer.features[i] + '"></span>';
-  }
-
-  template.querySelector('.lodge__features').innerHTML = featuresForDom;
-  template.querySelector('.lodge__description').textContent = object.offer.description;
-  dialogTitle.getElementsByTagName('img')[0].src = object.author.avatar;
-
-  dialogPanel = offerDialog.querySelector('.dialog__panel');
-  offerDialog.replaceChild(template, dialogPanel);
-}
-
-allOffers = createOffersArray(OFFERS_COUNT);
-createDomPinsList(allOffers, OFFERS_COUNT);
-createDomDialogPanel(allOffers[0]);
 
 // ------------------------------------ Pin events --------------------------------------
 

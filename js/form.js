@@ -115,8 +115,4 @@ window.formLogic = (function () {
     changeTime(evt, time);
   });
 
-  return {
-    returnDefaultValues: returnDefaultValues
-  };
-
 })();
