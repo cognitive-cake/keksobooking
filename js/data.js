@@ -1,6 +1,18 @@
 'use strict';
 
 window.data = (function () {
+  var pinMap = document.querySelector('.tokyo__pin-map');
+  var offerDialog = document.querySelector('#offer-dialog');
+  var dialogTitle = offerDialog.querySelector('.dialog__title');
+  var dialogPanel = offerDialog.querySelector('.dialog__panel');
+  var dialogClose = offerDialog.querySelector('.dialog__close');
+  var lodgeTemplate = document.querySelector('#lodge-template');
+  var offerPins;
+  var typeDescriptions = {
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом'
+  };
 
   var OFFER_FEATURES = [
     'wifi',
@@ -82,16 +94,26 @@ window.data = (function () {
   }
 
   return {
-    getRandomInteger: getRandomInteger,
-    getRandomFeatures: getRandomFeatures,
-    createOffersArray: createOffersArray,
+    pinMap: pinMap,
+    offerDialog: offerDialog,
+    dialogTitle: dialogTitle,
+    dialogPanel: dialogPanel,
+    dialogClose: dialogClose,
+    lodgeTemplate: lodgeTemplate,
+    offerPins: offerPins,
+    typeDescriptions: typeDescriptions,
+
     KEY_CODE_ENTER: 13,
     KEY_CODE_ESC: 27,
     OFFERS_COUNT: 8,
     OFFER_FEATURES: OFFER_FEATURES,
     OFFER_TITLE: OFFER_TITLE,
     OFFER_HOUSE_TYPE: OFFER_HOUSE_TYPE,
-    OFFER_TIME: OFFER_TIME
+    OFFER_TIME: OFFER_TIME,
+
+    getRandomInteger: getRandomInteger,
+    getRandomFeatures: getRandomFeatures,
+    createOffersArray: createOffersArray
   };
 
 })();

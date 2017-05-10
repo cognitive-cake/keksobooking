@@ -1,11 +1,10 @@
 'use strict';
 
 window.pin = (function () {
-  var pinMap = document.querySelector('.tokyo__pin-map');
 
   // Создание единичной метки объявления для карты
   function createPin(object, count) {
-    var pin = pinMap.querySelector('.pin').cloneNode(true);
+    var pin = window.data.pinMap.querySelector('.pin').cloneNode(true);
     pin.classList.remove('pin__main');
     pin.style.left = (object.location.x + 28) + 'px'; // Добавление размеров метки для точного отображения. 28px - половина ширины pin.png
     pin.style.top = (object.location.y + 75) + 'px'; // 75px - высота pin.png
@@ -23,21 +22,18 @@ window.pin = (function () {
     for (var i = 0; i < count; i++) {
       fragment.appendChild(createPin(array[i], i));
     }
-    pinMap.appendChild(fragment);
+    window.data.pinMap.appendChild(fragment);
   }
 
 // События, относящиеся к пинам
   function addEventsForPins() {
-    var offerDialog = document.querySelector('#offer-dialog');
-    var offerPins = pinMap.querySelectorAll('.pin:not(.pin__main)');
-    var dialogClose = offerDialog.querySelector('.dialog__close');
 
       // Подсветка пина и показ диалога
     function activatePin(evt) {
       var clickedPin = evt.currentTarget;
-      var activePin = pinMap.querySelector('.pin--active');
+      var activePin = window.data.pinMap.querySelector('.pin--active');
       var clickedPinIndex = clickedPin.dataset.index;
-      offerDialog.classList.remove('hidden');
+      window.data.offerDialog.classList.remove('hidden');
       if (activePin) {
         activePin.classList.remove('pin--active');
       }
@@ -48,11 +44,11 @@ window.pin = (function () {
 
       // Закрытие диалога и снятие подсветки с пина
     function diactivatePin() {
-      offerDialog.classList.add('hidden');
-      var currentPin = pinMap.querySelector('.pin--active');
+      window.data.offerDialog.classList.add('hidden');
+      var currentPin = window.data.pinMap.querySelector('.pin--active');
       currentPin.classList.remove('pin--active');
       document.removeEventListener('keydown', onDocumentKeydown);
-      dialogClose.removeEventListener('click', onDialogCloseClick);
+      window.data.dialogClose.removeEventListener('click', onDialogCloseClick);
     }
 
       // Обработчик для Esc
@@ -77,21 +73,20 @@ window.pin = (function () {
       return evt.keyCode === window.data.KEY_CODE_ESC;
     }
 
-    for (var i = 0; i < offerPins.length; i++) {
-      offerPins[i].addEventListener('click', function (evt) {
+    for (var i = 0; i < window.data.offerPins.length; i++) {
+      window.data.offerPins[i].addEventListener('click', function (evt) {
         activatePin(evt);
         document.addEventListener('keydown', onDocumentKeydown);
-        dialogClose.addEventListener('click', onDialogCloseClick);
+        window.data.dialogClose.addEventListener('click', onDialogCloseClick);
       });
-      offerPins[i].addEventListener('keydown', function (evt) {
+      window.data.offerPins[i].addEventListener('keydown', function (evt) {
         if (isEnterPressed(evt)) {
           activatePin(evt);
           document.addEventListener('keydown', onDocumentKeydown);
-          dialogClose.addEventListener('click', onDialogCloseClick);
+          window.data.dialogClose.addEventListener('click', onDialogCloseClick);
         }
       });
     }
-
   }
 
   return {
