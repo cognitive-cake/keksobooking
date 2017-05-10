@@ -1,11 +1,11 @@
 'use strict';
 
-window.cardCreate = (function () {
+window.card = (function () {
+
   var offerDialog = document.querySelector('#offer-dialog');
   var dialogTitle = offerDialog.querySelector('.dialog__title');
   var dialogPanel = offerDialog.querySelector('.dialog__panel');
   var lodgeTemplate = document.querySelector('#lodge-template');
-  var allOffers = [];
   var typeDescriptions = {
     flat: 'Квартира',
     bungalo: 'Бунгало',
@@ -37,8 +37,8 @@ window.cardCreate = (function () {
     offerDialog.replaceChild(template, dialogPanel);
   }
 
-  allOffers = createOffersArray(OFFERS_COUNT);
-  createDomPinsList(allOffers, OFFERS_COUNT);
-  return  createDomDialogPanel(allOffers[0]);
+  return {
+    createDomDialogPanel: createDomDialogPanel
+  };
 
 })();
