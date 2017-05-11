@@ -41,7 +41,6 @@ window.pin = (function () {
       clickedPin.classList.add('pin--active');
     }
 
-
       // Закрытие диалога и снятие подсветки с пина
     function diactivatePin() {
       window.data.offerDialog.classList.add('hidden');
@@ -73,6 +72,7 @@ window.pin = (function () {
       return evt.keyCode === window.data.KEY_CODE_ESC;
     }
 
+      // Добавление обработчиков событий
     for (var i = 0; i < window.data.offerPins.length; i++) {
       window.data.offerPins[i].addEventListener('click', function (evt) {
         activatePin(evt);
