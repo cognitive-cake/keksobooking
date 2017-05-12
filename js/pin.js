@@ -25,10 +25,10 @@ window.pin = (function () {
     window.data.pinMap.appendChild(fragment);
   }
 
-// События, относящиеся к пинам
+  // События, относящиеся к пинам
   function addEventsForPins() {
 
-      // Подсветка пина и показ диалога
+    // Подсветка пина и показ диалога
     function activatePin(evt) {
       var clickedPin = evt.currentTarget;
       var activePin = window.data.pinMap.querySelector('.pin--active');
@@ -41,7 +41,7 @@ window.pin = (function () {
       clickedPin.classList.add('pin--active');
     }
 
-      // Закрытие диалога и снятие подсветки с пина
+    // Закрытие диалога и снятие подсветки с пина
     function diactivatePin() {
       window.data.offerDialog.classList.add('hidden');
       var currentPin = window.data.pinMap.querySelector('.pin--active');
@@ -50,29 +50,29 @@ window.pin = (function () {
       window.data.dialogClose.removeEventListener('click', onDialogCloseClick);
     }
 
-      // Обработчик для Esc
+    // Обработчик для Esc
     function onDocumentKeydown(evt) {
       if (isEscPressed(evt)) {
         diactivatePin();
       }
     }
 
-      // Обработчик для крестика у диалога
+    // Обработчик для крестика у диалога
     function onDialogCloseClick() {
       diactivatePin();
     }
 
-      // Проверка клавиши Enter
+    // Проверка клавиши Enter
     function isEnterPressed(evt) {
       return evt.keyCode === window.data.KEY_CODE_ENTER;
     }
 
-      // Проверка клавиши Esc
+    // Проверка клавиши Esc
     function isEscPressed(evt) {
       return evt.keyCode === window.data.KEY_CODE_ESC;
     }
 
-      // Добавление обработчиков событий
+    // Добавление обработчиков событий
     for (var i = 0; i < window.data.offerPins.length; i++) {
       window.data.offerPins[i].addEventListener('click', function (evt) {
         activatePin(evt);
