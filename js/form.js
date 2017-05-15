@@ -57,6 +57,15 @@ window.formLogic = (function () {
     }
   }
 
+  // Проверка валидности цены после изменения типа жилья
+  function checkPriceValidity() {
+    if (price.checkValidity()) {
+      price.classList.remove('error');
+    } else {
+      price.classList.add('error');
+    }
+  }
+
   // Подсветка invalid-полей
   function markInvalidField(evt) {
     var invalidField = evt.currentTarget;
@@ -67,13 +76,22 @@ window.formLogic = (function () {
     }
   }
 
-  // Проверка валидности цены после изменения типа жилья
-  function checkPriceValidity() {
-    if (price.checkValidity()) {
-      price.classList.remove('error');
+  // Вывод подсказки для поля с адресом
+  function displayMessageForAdressField(evt) {
+    var addressField = evt.currentTarget;
+    if (addressField.validity.patternMismatch) {
+      addressField.setCustomValidity('Введите адрес в формате: \'x: {1-3 цифры}px, y: {1-3 цифры}px\'');
     } else {
-      price.classList.add('error');
+      addressField.setCustomValidity('');
+      movePin(evt);
     }
+  }
+
+  // Изменение положения пина в зависимости от введенного адреса
+  function movePin(evt) {
+    var addressField = evt.currentTarget;
+    var re = /[xy]: |, /;
+    var coordsArray = addressField.value.split(re);
   }
 
   // Возврат полям значений по-умолчанию
@@ -108,11 +126,19 @@ window.formLogic = (function () {
   capacity.addEventListener('change', function (evt) {
     changeRooms(evt);
   });
+  newNoticeAddress.addEventListener('input', function (evt) {
+    displayMessageForAdressField(evt);
+    markInvalidField(evt);
+  });
   time.addEventListener('change', function (evt) {
     changeTime(evt, timeout);
   });
   timeout.addEventListener('change', function (evt) {
     changeTime(evt, time);
   });
+
+  return {
+    newNoticeAddress: newNoticeAddress
+  };
 
 })();

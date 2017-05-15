@@ -10,7 +10,7 @@ window.map = (function () {
 
     var startCoords = {
       x: evt.clientX,
-      y: evt.clienY
+      y: evt.clientY
     };
 
     function onMouseMove(moveEvt) {
@@ -28,6 +28,8 @@ window.map = (function () {
 
       newOfferPin.style.top = (newOfferPin.offsetTop - shift.y) + 'px';
       newOfferPin.style.left = (newOfferPin.offsetLeft - shift.x) + 'px';
+
+      window.formLogic.newNoticeAddress.value = 'x: ' + newOfferPin.style.left + ', y: ' + newOfferPin.style.top;
     }
 
     function onMouseUp(upEvt) {
