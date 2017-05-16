@@ -26,8 +26,8 @@ window.map = (function () {
         y: moveEvt.clientY
       };
 
-      newOfferPin.style.top = (newOfferPin.offsetTop - shift.y) + 'px';
       newOfferPin.style.left = (newOfferPin.offsetLeft - shift.x) + 'px';
+      newOfferPin.style.top = (newOfferPin.offsetTop - shift.y) + 'px';
 
       window.formLogic.newNoticeAddress.value = 'x: ' + newOfferPin.style.left + ', y: ' + newOfferPin.style.top;
     }

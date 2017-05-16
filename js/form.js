@@ -80,7 +80,7 @@ window.formLogic = (function () {
   function displayMessageForAdressField(evt) {
     var addressField = evt.currentTarget;
     if (addressField.validity.patternMismatch) {
-      addressField.setCustomValidity('Введите адрес в формате: \'x: {1-3 цифры}px, y: {1-3 цифры}px\'');
+      addressField.setCustomValidity('Введите адрес в формате: "x: {1-3 цифры}px, y: {1-3 цифры}px"');
     } else {
       addressField.setCustomValidity('');
       movePin(evt);
@@ -90,8 +90,11 @@ window.formLogic = (function () {
   // Изменение положения пина в зависимости от введенного адреса
   function movePin(evt) {
     var addressField = evt.currentTarget;
-    var re = /[xy]: |, /;
-    var coordsArray = addressField.value.split(re);
+    var re = /\d+px/g;
+    var coordsArray = addressField.value.match(re);
+
+    window.map.newOfferPin.style.left = coordsArray[0];
+    window.map.newOfferPin.style.top = coordsArray[1];
   }
 
   // Возврат полям значений по-умолчанию
