@@ -23,7 +23,7 @@ window.card = (function () {
     window.data.dialogTitle.getElementsByTagName('img')[0].src = object.author.avatar;
 
     window.data.dialogPanel = window.data.offerDialog.querySelector('.dialog__panel');
-    window.data.offerDialog.replaceChild(template, window.data.dialogPanel);
+    window.showCard(template, window.data.dialogPanel);
   }
 
   return {
