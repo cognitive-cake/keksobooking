@@ -1,7 +1,7 @@
 'use strict';
-
+// Задача: написать универсальный модуль для синхронизации любых полей
 window.synchronizeFields = function (firstField, secondField, firstArrayOfValues, secondArrayOfValues, syncMethod) {
-  1
-  2
-  3
+  firstField.addEventListener('change', function (evt) {
+    currentField = evt.currentTarget;
+  });
 };
