@@ -57,10 +57,6 @@ window.formLogic = (function () {
     }
   }
 
-  function syncTimeValues(element, value) {
-    element.value = value;
-  }
-
   // Проверка валидности цены после изменения типа жилья
   function checkPriceValidity() {
     if (price.checkValidity()) {
